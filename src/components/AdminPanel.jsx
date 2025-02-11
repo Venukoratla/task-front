@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getUsers, changeUserRole, deleteUser } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -20,9 +21,23 @@ const AdminPanel = () => {
     setUsers(users.filter((user) => user._id !== id));
   };
 
+  const handleLogout = () => {
+    Cookies.remove("adminToken"); // Remove the authentication token
+    navigate("/"); // Redirect to login page
+  };
+
   return (
     <div className="mt-5 p-4 bg-white shadow-lg rounded-lg w-full">
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition duration-300"
+        >
+          Logout
+        </button>
+      </div>
       <h2 className="text-2xl font-bold mb-4 text-gray-700">Manage Users</h2>
+
       <table className="w-full border-collapse border rounded-lg shadow-sm">
         <thead>
           <tr className="bg-gray-200 text-gray-700">

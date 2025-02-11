@@ -115,9 +115,13 @@ export const getUserDetails = async (userId) => {
 };
 
 export const updateUserTask = async (taskId, updatedData) => {
+  console.log(taskId);
   const response = await fetch(`/admin/update-task/${taskId}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      ...adminAuthHeaders(),
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(updatedData),
   });
   return response.json();
